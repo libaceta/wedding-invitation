@@ -1,0 +1,19 @@
+.form {
+    width: 80%;
+    padding: 2rem;
+    margin: auto;
+    background-color: #d8bcaf;
+    border-radius: 1rem;
+}
+
+.form-section {
+    display: grid;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.fieldset-radio-group {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+}

@@ -1,0 +1,12 @@
+.card {
+    padding: 1rem;
+    background-color: rgba(185, 69, 69, 0.1);
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.form-section {
+    display: grid;
+    align-items: center;
+    margin: 1rem 0;
+}
