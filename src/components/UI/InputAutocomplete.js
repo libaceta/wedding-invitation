@@ -11,6 +11,7 @@ const InputAutocomplete = (props) => {
         filteredSuggestions: [],
         showSuggestions: false,
         userInput: '',
+        checked: false,
         selected: false
     });
 
@@ -22,36 +23,56 @@ const InputAutocomplete = (props) => {
             suggestion =>
                 suggestion.value.toLowerCase().indexOf(userInput.toLowerCase()) > -1
         );
+
+        if (state.option) {
+            props.onDeselect(state.option);
+        }
     
         setState({
             activeSuggestion: 0,
             filteredSuggestions,
             showSuggestions: filteredSuggestions.length > 0,
             userInput: e.currentTarget.value,
+            option: undefined,
             selected: false
         });
     };
 
     const onClick = e => {
+        const selectedOption = state.filteredSuggestions.filter(suggestion => suggestion.value === e.currentTarget.innerText)[0];
         setState({
             activeSuggestion: 0,
             filteredSuggestions: [],
             showSuggestions: false,
             userInput: e.currentTarget.innerText,
+            option: selectedOption,
             selected: true
         });
+        if (typeof props.index === 'number') {
+            props.onSelect(selectedOption, props.index);
+        } else {
+            props.onSelect(selectedOption);
+        }
     };
 
     const onKeyDown = e => {
         const { activeSuggestion, filteredSuggestions } = state;
     
         if (e.keyCode === 13) {
+            e.preventDefault();
+            const selectedOption = state.filteredSuggestions[state.activeSuggestion];
             setState({
                 activeSuggestion: 0,
                 showSuggestions: false,
                 userInput: filteredSuggestions[activeSuggestion].value,
+                option: selectedOption,
                 selected: true
             });
+            if (typeof props.index === 'number') {
+                props.onSelect(selectedOption, props.index);
+            } else {
+                props.onSelect(selectedOption);
+            }
         } else if (e.keyCode === 38) {
             if (activeSuggestion === 0) {
                 return;
@@ -85,6 +106,7 @@ const InputAutocomplete = (props) => {
                 )}
             </div></div>}
             {!state.showSuggestions && !state.selected && state.userInput && <span>{props.notExistsError}</span>}
+            {!state.showSuggestions && state.option && state.option.checked && <span>{props.checkedError}</span>}
         </Fragment>
     )
 }

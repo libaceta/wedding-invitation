@@ -6,7 +6,7 @@ const Input = (props) => {
     return (
         <Fragment>
             <label className={styles.label}>{props.label}</label>
-            <input className={styles['input-rounded']}/>
+            <input className={styles['input-rounded']} />
         </Fragment>
     );
 }

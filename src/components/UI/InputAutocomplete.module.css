@@ -33,12 +33,12 @@
 
 .option:hover {
     cursor: pointer;
-    background-color: rgba(216, 188, 175, 0.3);
+    background-color: rgba(204, 196, 204, 0.3);
 }
 
 .active {
     padding: 0.2rem 1rem;
-    background-color: rgba(216, 188, 175, 0.3);
+    background-color: rgba(204, 196, 204, 0.3);
 }
 
 .active:hover {
