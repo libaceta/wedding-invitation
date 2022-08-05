@@ -5,6 +5,7 @@ import Input from './UI/Input';
 import styles from './InvitationForm.module.css';
 import RadioButtonGroup from './UI/RadioButtonGroup';
 import CompanyCard from './CompanyCard';
+import InputAutocomplete from './UI/InputAutocomplete';
 
 const InvitationForm = props => {
     const [responseInvitation, setResponseInvitation] = useState();
@@ -12,6 +13,8 @@ const InvitationForm = props => {
 
     const radioGroupInviteResponse = [{value: 'Y', label:'Si, contá conmigo'}, {value: 'N', label:'No puedo, lo siento'}];
     const radioGroupCompany = [{value: 'Y', label:'Si'}, {value: 'N', label:'No'}];
+
+    const guestOptions = props.guests.map(guest =>  { return {id: guest.id, value: guest.name} });
 
     const onCheckHandler = (value) => {
         setResponseInvitation(value);
@@ -25,7 +28,10 @@ const InvitationForm = props => {
         <Fragment>
             <form className={styles.form}>
                 <section className={styles['form-section']}>
-                    <Input label="NOMBRE Y APELLIDO"/>
+                    <InputAutocomplete 
+                        label="NOMBRE Y APELLIDO"
+                        suggestions={guestOptions}
+                        notExistsError="El nombre ingresado no se encuentra en la lista de invitados" />
                     <Input label="NÚMERO DE TELÉFONO"/>
                 </section>
                 <fieldset className={styles['fieldset-radio-group']}>

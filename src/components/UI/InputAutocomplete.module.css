@@ -1,0 +1,46 @@
+.label {
+    margin-left: 0.75rem;
+}
+
+.input-rounded {
+    color: #4a4a4a;
+    border: none;
+    border-radius: 1.5rem !important;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0.3rem 0.75rem;
+    height: 1.5rem;
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+}
+
+.input-rounded:focus-visible {
+    outline: 0px;
+}
+
+.options-box {
+   position: absolute;
+   background: rgba(255, 255, 255, 0.8);
+   margin-top: -1rem;
+   width: 80%;
+   border-radius: 1rem;
+   max-height: 10rem;
+   overflow-y: auto;
+}
+
+.option {
+    padding: 0.2rem 1rem;
+}
+
+.option:hover {
+    cursor: pointer;
+    background-color: rgba(216, 188, 175, 0.3);
+}
+
+.active {
+    padding: 0.2rem 1rem;
+    background-color: rgba(216, 188, 175, 0.3);
+}
+
+.active:hover {
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 
-export function get(path, params) {
+export const get = async (path, params) => {
     let paramsUrl = '';
     if (params) {
         paramsUrl = '?'
@@ -8,8 +8,7 @@ export function get(path, params) {
         }
         paramsUrl = paramsUrl.substring(0, paramsUrl.length - 1);
     }
-    return fetch(process.env.REACT_APP_BACKEND_URL + path + paramsUrl , {
+    return await fetch(process.env.REACT_APP_BACKEND_URL + path + paramsUrl , {
         method: 'GET',
-
-    });
+    }).then(res => res.clone().json());
 }

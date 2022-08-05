@@ -11,10 +11,9 @@ const EventConfirmationPage = (props) => {
     const [guests, setGuests] = useState([]);
 
     useEffect(() => {
-        console.log(eventId);
         get("/guests", [{key: 'eventId', value: eventId}]).then(
             (response) => {
-                setGuests(response.body);
+                setGuests(response);
             }
         );
     }, [eventId]);
