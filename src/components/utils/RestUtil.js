@@ -10,5 +10,9 @@ export const get = async (path, params) => {
     }
     return await fetch(process.env.REACT_APP_BACKEND_URL + path + paramsUrl , {
         method: 'GET',
-    }).then(res => res.clone().json());
+    }).then(
+        res => res.clone().json()
+    ).catch((error)=>{
+        console.log(error)
+    });
 }

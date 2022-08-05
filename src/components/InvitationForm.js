@@ -6,6 +6,7 @@ import styles from './InvitationForm.module.css';
 import RadioButtonGroup from './UI/RadioButtonGroup';
 import CompanyCard from './CompanyCard';
 import InputAutocomplete from './UI/InputAutocomplete';
+import ButtonGeneral from './UI/ButtonGeneral';
 
 const InvitationForm = props => {
     const [responseInvitation, setResponseInvitation] = useState();
@@ -24,9 +25,13 @@ const InvitationForm = props => {
         setHasCompany(value);
     }
 
+    const onSubmitHandler = () => {
+        console.log('submit')
+    }
+
     return (
         <Fragment>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onSubmitHandler}>
                 <section className={styles['form-section']}>
                     <InputAutocomplete 
                         label="NOMBRE Y APELLIDO"
@@ -47,6 +52,12 @@ const InvitationForm = props => {
                 {responseInvitation === 'Y' && hasCompany === 'Y' && 
                     <CompanyCard />
                 }
+                <div className={styles['container-button']}>
+                    <ButtonGeneral
+                        type="submit"
+                        label="CONFIRMAR"
+                    />
+                </div>
             </form>
         </Fragment>
     );

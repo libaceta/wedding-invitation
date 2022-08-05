@@ -6,7 +6,13 @@ import styles from './InputAutocomplete.module.css';
 
 const InputAutocomplete = (props) => {
 
-    const [state, setState] = useState({});
+    const [state, setState] = useState({
+        activeSuggestion: 0,
+        filteredSuggestions: [],
+        showSuggestions: false,
+        userInput: '',
+        selected: false
+    });
 
     const onChange = e => {
         const { suggestions } = props;
@@ -71,6 +77,7 @@ const InputAutocomplete = (props) => {
             {state.showSuggestions && <div><div className={styles['options-box']}>
                 {state.filteredSuggestions.map((suggestion, index) => 
                     <option className={index === state.activeSuggestion ? styles.active : styles.option}
+                        key={suggestion.id}
                         onClick={e => onClick(e)}
                         value={suggestion.id}>
                             {suggestion.value}

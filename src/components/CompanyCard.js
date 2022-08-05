@@ -33,7 +33,9 @@ const CompanyCard = props => {
                     </div>
                 )
             }
-            <ButtonGeneral label="AGREGAR INVITADO" onAction={addSectionHandler} />
+            <div className={styles['button-add']}>
+                <ButtonGeneral label="AGREGAR INVITADO" onAction={addSectionHandler} />
+            </div>
         </div>
     )
 }
