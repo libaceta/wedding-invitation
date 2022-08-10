@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import ButtonGeneral from './UI/ButtonGeneral';
-import InputAutocomplete from './UI/InputAutocomplete';
+import ButtonGeneral from '../../UI/ButtonGeneral';
+import InputAutocomplete from '../../UI/InputAutocomplete';
 
 import styles from './CompanyCard.module.css';
 

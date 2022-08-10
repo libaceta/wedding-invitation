@@ -1,14 +1,15 @@
 import { Fragment, useEffect, useReducer, useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
-import Input from './UI/Input';
-import RadioButtonGroup from './UI/RadioButtonGroup';
+import Input from '../../UI/Input';
+import RadioButtonGroup from '../../UI/RadioButtonGroup';
 import CompanyCard from './CompanyCard';
-import InputAutocomplete from './UI/InputAutocomplete';
-import ButtonGeneral from './UI/ButtonGeneral';
-import ConfirmationModal from './ConfirmationModal';
+import InputAutocomplete from '../../UI/InputAutocomplete';
+import ButtonGeneral from '../../UI/ButtonGeneral';
+import ConfirmationModal from '../../ConfirmationModal';
 
-import { post } from './utils/RestUtil';
-import { ATTEND_RESPONSE_ENUM } from './utils/AttendResponseEnum';
+import { post } from '../../utils/RestUtil';
+import { ATTEND_RESPONSE_ENUM } from '../../utils/AttendResponseEnum';
 
 import styles from './InvitationForm.module.css';
 
@@ -22,6 +23,8 @@ const phoneReducer = (state, action) => {
   }
 
 const InvitationForm = props => {
+    const navigate = useNavigate();
+    
     const [responseInvitation, setResponseInvitation] = useState();
     const [hasCompany, setHasCompany] = useState();
     const [selectedGuests, setSelectedGuests] = useState([]);
@@ -91,7 +94,7 @@ const InvitationForm = props => {
             });
             console.log(guests);
             post('/events/' + props.eventId + '/confirm-invitations', undefined, guests).then((response) => {
-                setConfirmationModalData({show: true, title: 'Su confirmación fue enviada correctamente', message: '', icon: 'SUCCESS'});
+                setConfirmationModalData({show: true, title: 'Su confirmación fue enviada correctamente', message: '', icon: 'SUCCESS', navigate: '/thanks'});
             }).catch((error) => {
                 setConfirmationModalData({show: true, title: 'Error al enviar su confirmación', message: 'Por favor intentelo de nuevo más tarde', icon: 'ERROR'});
             });
@@ -183,7 +186,8 @@ const InvitationForm = props => {
                 <ConfirmationModal onClose={hideConfirmationModal}
                     title={confirmationModalData.title}
                     message={confirmationModalData.message}
-                    icon= {confirmationModalData.icon} />
+                    icon= {confirmationModalData.icon}
+                    navigate={confirmationModalData.navigate} />
             }
         </Fragment>
     );

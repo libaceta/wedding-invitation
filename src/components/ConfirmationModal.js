@@ -1,10 +1,23 @@
 import { BsCheckCircle, BsXCircle } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 import Modal from './UI/Modal';
 
 import classes from './ConfirmationModal.module.css';
 
 const ConfirmationModal = props => {
+
+    const navigate = useNavigate();
+
+    const onClose = () => {
+        if (props.navigate) {
+            navigate(props.navigate);
+        }
+        if (props.onClose) {
+            props.onClose();
+            return;
+        }
+    }
 
     return <Modal onClose={props.onClose}>
         <div className={classes.title}>
@@ -16,7 +29,7 @@ const ConfirmationModal = props => {
             <span style={{marginLeft: '1rem'}}>{props.message}</span>
         </div>
         <div className={classes.actions}>
-            <button className={classes['button--alt']} onClick={props.onClose}>CERRAR</button>
+            <button className={classes['button--alt']} onClick={onClose}>CERRAR</button>
         </div>
     </Modal>
 }

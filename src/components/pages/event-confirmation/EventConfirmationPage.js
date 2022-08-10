@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import EventHeader from "./EventHeader";
 import InvitationForm from "./InvitationForm";
-import { get } from "./utils/RestUtil";
+import { get } from "../../utils/RestUtil";
 
 import styles from './EventConfirmationPage.module.css';
 
