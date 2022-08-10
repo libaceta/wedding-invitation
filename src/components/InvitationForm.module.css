@@ -23,3 +23,9 @@
     justify-content: center;
     margin: 2rem 0;
 }
+
+.check-error {
+    color: #e1545b;
+    margin-left: 0.75rem;
+    margin-top: -0.75rem;
+}

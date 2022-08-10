@@ -1,4 +1,5 @@
 .label {
+    margin-top: 0.75rem;
     margin-left: 0.75rem;
 }
 
@@ -15,4 +16,15 @@
 
 .input-rounded:focus-visible {
     outline: 0px;
+}
+
+.input-rounded:focus {
+    outline: none;
+    background: rgba(93, 98, 78, 0.1);
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }

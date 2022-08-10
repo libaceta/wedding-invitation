@@ -1,4 +1,5 @@
 .label {
+    margin-top: 0.75rem;
     margin-left: 0.75rem;
 }
 
@@ -15,6 +16,11 @@
 
 .input-rounded:focus-visible {
     outline: 0px;
+}
+
+.input-rounded:focus {
+    outline: none;
+    background: rgba(93, 98, 78, 0.1);
 }
 
 .options-box {
@@ -43,4 +49,10 @@
 
 .active:hover {
     cursor: pointer;
+}
+
+.check-error {
+    color: #e1545b;
+    margin-left: 0.75rem;
+    margin-top: -0.75rem;
 }

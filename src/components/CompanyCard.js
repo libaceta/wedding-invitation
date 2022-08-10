@@ -19,7 +19,7 @@ const CompanyCard = props => {
             prevPersons[index].name = guest.value;
             return [...prevPersons];
         });
-        props.onSelect(guest);
+        props.onSelect(guest, index);
     }
 
     const removeSectionHandler = (guest, index) => {

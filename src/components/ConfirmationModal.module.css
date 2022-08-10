@@ -1,0 +1,53 @@
+.title {
+    text-align: center;
+}
+
+.message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #5d624e;
+    padding: 1rem 0;
+}
+
+.icon-success {
+    color: #c491dd;
+    font-size: 4rem;
+}
+
+.icon-error {
+    color: #e1545b;
+    font-size: 4rem;
+}
+  
+.actions {
+    text-align: right;
+}
+
+.actions button {
+    font: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #c491dd;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+  
+.actions button:hover,
+.actions button:active {
+    background-color: #d4c4ec;
+    border-color: #d4c4ec;
+    color: white;
+}
+  
+.actions .button--alt {
+    color: #c491dd;
+}
+
+.actions .button {
+    background-color: #c491dd;
+    color: white;
+}

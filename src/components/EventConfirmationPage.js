@@ -25,7 +25,7 @@ const EventConfirmationPage = (props) => {
     return (
         <div className={styles.container}>
             <EventHeader />
-            <InvitationForm guests={guests}/>
+            <InvitationForm guests={guests} eventId={eventId}/>
         </div>
     )
 }
