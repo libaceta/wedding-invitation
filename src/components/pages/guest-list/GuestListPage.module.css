@@ -1,0 +1,58 @@
+.center {
+    text-align: center;
+}
+
+.data {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    width: 80%;
+    padding: 2rem;
+    margin: auto;
+    background-color: #e6e6fa;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.line {
+    color: #5d624e;
+    background-color: #5d624e;
+    height: 5;
+}
+
+.bold {
+    font-weight: bold;
+    color: #5d624e
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.name-column {
+    width: 80%;
+    padding-left: 2rem;
+}
+
+.icon-success {
+    color: #c491dd;
+    font-size: 1.5rem;
+}
+
+.icon-error {
+    color: #e1545b;
+    font-size: 1.5rem;
+}
+
+@media(max-width: 480px) {
+    .data {
+        display: block;
+        margin: auto;
+    }
+  }

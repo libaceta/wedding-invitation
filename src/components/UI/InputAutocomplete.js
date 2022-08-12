@@ -1,6 +1,7 @@
 
 
 import React, { Fragment, useImperativeHandle, useRef, useState } from 'react';
+import { accentFold } from '../utils/StringUtils';
 
 import styles from './InputAutocomplete.module.css';
 
@@ -149,24 +150,6 @@ const InputAutocomplete = React.forwardRef((props, ref) => {
             onClick(e.relatedTarget);
         }
         if (props.onBlur) props.onBlur(state);
-    }
-
-    const accentFold = (inStr) => {
-        return inStr.replace(
-          /([àáâãäå])|([çčć])|([èéêë])|([ìíîï])|([ñ])|([òóôõöø])|([ß])|([ùúûü])|([ÿ])|([æ])/g, 
-          function (str, a, c, e, i, n, o, s, u, y, ae) {
-            if (a) return 'a';
-            if (c) return 'c';
-            if (e) return 'e';
-            if (i) return 'i';
-            if (n) return 'n';
-            if (o) return 'o';
-            if (s) return 's';
-            if (u) return 'u';
-            if (y) return 'y';
-            if (ae) return 'ae';
-          }
-        );
     }
 
     return (

@@ -1,7 +1,8 @@
 body {
-  font-family: 'Poppins', frutiger, Helvetica, sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-weight: lighter;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  color: #5d624e;
 }
 
 .background {
