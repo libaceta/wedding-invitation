@@ -50,6 +50,11 @@
     font-size: 1.5rem;
 }
 
+.icon-none {
+    color: grey;
+    font-size: 1.5rem;
+}
+
 @media(max-width: 480px) {
     .data {
         display: block;

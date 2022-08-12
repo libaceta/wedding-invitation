@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { BsCheckCircle, BsXCircle } from "react-icons/bs";
+import { BsCheckCircle, BsSquare, BsXCircle } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 
 import { get } from "../../utils/RestUtil";
@@ -53,8 +53,11 @@ const GuestListPage = (props) => {
             </div>
             <div className={styles.card}>
                 <div className={styles.row}>
-                    <div className={styles['name-column']}>
+                    <div style={{width: '50%'}}>
                         <span className={styles.bold}>NOMBRE</span>
+                    </div>
+                    <div style={{width: '35%'}}>
+                        <span className={styles.bold}>TELÉFONO</span>
                     </div>
                     <span></span>
                 </div>
@@ -63,11 +66,15 @@ const GuestListPage = (props) => {
                         <hr className={styles.line} />
                         <div className={styles.row}
                             key={index}>
-                                <div className={styles['name-column']}>
+                                <div style={{width: '50%'}}>
                                     <span>{guest.name}</span>
+                                </div>
+                                <div style={{width: '35%'}}>
+                                    <span>{guest.phone}</span>
                                 </div>
                                 {guest.attend === ATTEND_RESPONSE_ENUM.YES && <BsCheckCircle className={styles['icon-success']} />}
                                 {guest.attend === ATTEND_RESPONSE_ENUM.NO && <BsXCircle className={styles['icon-error']} />}
+                                {guest.attend === ATTEND_RESPONSE_ENUM.UNCONFIRMED && <BsSquare className={styles['icon-none']} />}
                         </div>
                     </Fragment>
                 )}
