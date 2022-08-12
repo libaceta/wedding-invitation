@@ -148,6 +148,7 @@ const InputAutocomplete = React.forwardRef((props, ref) => {
             return;
         } else if (state.showSuggestions) {
             onClick(e.relatedTarget);
+            return;
         }
         if (props.onBlur) props.onBlur(state);
     }

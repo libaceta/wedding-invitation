@@ -209,6 +209,20 @@ const InvitationForm = props => {
                         onDeselect={onDeselectGuest}
                     />
                 }
+                {responseInvitation === "N" &&
+                    <fieldset className={styles['fieldset-radio-group']}>
+                        <legend>TENÉS ALGÚN ACOMPAÑANTE QUE NO ASISTA?</legend>
+                        <RadioButtonGroup onCheck={onHasCompanyHandler} options={radioGroupCompany}/>
+                    </fieldset>
+                }
+                {responseInvitation === 'N' && hasCompany === 'Y' && 
+                    <CompanyCard 
+                        guests={guestOptions}
+                        selectedGuests={selectedGuests}
+                        onSelect={onSelectGuest}
+                        onDeselect={onDeselectGuest}
+                    />
+                }
                 <div className={styles['container-button']}>
                     <ButtonGeneral
                         type="submit"
