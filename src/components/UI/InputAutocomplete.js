@@ -1,6 +1,6 @@
 
 
-import { Fragment, useState } from 'react';
+import React, { Fragment, useImperativeHandle, useRef, useState } from 'react';
 
 import styles from './InputAutocomplete.module.css';
 
@@ -9,7 +9,7 @@ const KEYCODE_ESC = 27;
 const KEYCODE_ARROW_UP = 38;
 const KEYCODE_ARROW_DOWN = 40
 
-const InputAutocomplete = (props) => {
+const InputAutocomplete = React.forwardRef((props, ref) => {
 
     const [state, setState] = useState({
         activeSuggestion: 0,
@@ -20,44 +20,74 @@ const InputAutocomplete = (props) => {
         selected: false
     });
 
+    const inputRef = useRef();
+
+    const activate = () => {
+        inputRef.current.focus();
+    }
+    
+    useImperativeHandle(ref, () => {
+        return {
+            focus: activate
+        }
+    });
+
     const onChange = e => {
         const { suggestions } = props;
         const userInput = e.currentTarget.value;
-    
+
         const filteredSuggestions = suggestions.filter(
             suggestion =>
-                suggestion.value.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+                accentFold(suggestion.value.toLowerCase()).indexOf(accentFold(userInput.toLowerCase())) > -1
         );
 
         if (state.option) {
             props.onDeselect(state.option);
         }
-    
-        setState({
-            activeSuggestion: 0,
-            filteredSuggestions,
-            showSuggestions: filteredSuggestions.length > 0,
-            userInput: e.currentTarget.value,
-            option: undefined,
-            selected: false
-        });
+
+        let newState = {};
+        if (filteredSuggestions.length === 1 && userInput === filteredSuggestions[0].value) {
+            const selectedOption = state.filteredSuggestions.filter(suggestion => suggestion.value === e.innerText)[0];
+            newState = {
+                activeSuggestion: 0,
+                filteredSuggestions: [],
+                showSuggestions: false,
+                userInput: e.innerText,
+                option: selectedOption,
+                selected: true
+            }
+        } else {
+            newState = {
+                activeSuggestion: 0,
+                filteredSuggestions,
+                showSuggestions: filteredSuggestions.length > 0,
+                userInput: e.currentTarget.value,
+                option: undefined,
+                selected: false
+            }
+        }
+        
+        setState(newState);
+        if (props.onChange) props.onChange(newState);
     };
 
     const onClick = e => {
         const selectedOption = state.filteredSuggestions.filter(suggestion => suggestion.value === e.innerText)[0];
-        setState({
+        let newState = {
             activeSuggestion: 0,
             filteredSuggestions: [],
             showSuggestions: false,
             userInput: e.innerText,
             option: selectedOption,
             selected: true
-        });
+        }
+        setState(newState);
         if (typeof props.index === 'number') {
             props.onSelect(selectedOption, props.index);
         } else {
             props.onSelect(selectedOption);
         }
+        if (props.onChange) props.onChange(newState);
     };
 
     const onKeyDown = e => {
@@ -66,18 +96,20 @@ const InputAutocomplete = (props) => {
         if (e.keyCode === KEYCODE_ENTER) {
             e.preventDefault();
             const selectedOption = state.filteredSuggestions[state.activeSuggestion];
-            setState({
+            let newState = {
                 activeSuggestion: 0,
                 showSuggestions: false,
                 userInput: filteredSuggestions[activeSuggestion].value,
                 option: selectedOption,
                 selected: true
-            });
+            }
+            setState(newState);
             if (typeof props.index === 'number') {
                 props.onSelect(selectedOption, props.index);
             } else {
                 props.onSelect(selectedOption);
             }
+            if (props.onChange) props.onChange(newState);
         } else if (e.keyCode === KEYCODE_ESC) {
             setState({
                 activeSuggestion: 0,
@@ -102,23 +134,46 @@ const InputAutocomplete = (props) => {
 
     const onBlurHandler = (e) => {
         if (state.showSuggestions && (!e.relatedTarget || !e.currentTarget.parentElement.contains(e.relatedTarget))) {
-            setState({
+            let newState = {
                 activeSuggestion: 0,
                 filteredSuggestions: [],
                 showSuggestions: false,
-                userInput: '',
+                userInput: state.userInput,
                 checked: false,
                 selected: false
-            });
+            }
+            setState(newState);
+            if (props.onBlur) props.onBlur(newState);
+            return;
         } else if (state.showSuggestions) {
             onClick(e.relatedTarget);
         }
+        if (props.onBlur) props.onBlur(state);
+    }
+
+    const accentFold = (inStr) => {
+        return inStr.replace(
+          /([àáâãäå])|([çčć])|([èéêë])|([ìíîï])|([ñ])|([òóôõöø])|([ß])|([ùúûü])|([ÿ])|([æ])/g, 
+          function (str, a, c, e, i, n, o, s, u, y, ae) {
+            if (a) return 'a';
+            if (c) return 'c';
+            if (e) return 'e';
+            if (i) return 'i';
+            if (n) return 'n';
+            if (o) return 'o';
+            if (s) return 's';
+            if (u) return 'u';
+            if (y) return 'y';
+            if (ae) return 'ae';
+          }
+        );
     }
 
     return (
         <Fragment>
             <label className={styles.label}>{props.label}</label>
             <input className={styles['input-rounded']}
+                ref={inputRef}
                 type="text"
                 onChange={e => onChange(e)}
                 onKeyDown={e => onKeyDown(e)}
@@ -136,11 +191,8 @@ const InputAutocomplete = (props) => {
                     </option>
                 )}
             </div></div>}
-            {!state.showSuggestions && !state.selected && state.userInput && <span className={styles['check-error']}>{props.notExistsError}</span>}
-            {!state.showSuggestions && state.option && state.option.checked && <span className={styles['check-error']}>{props.checkedError}</span>}
-            {!state.showSuggestions && !state.userInput && <span className={styles['check-error']}>Debe seleccionar una opción del listado</span>}
         </Fragment>
     )
-}
+})
 
 export default InputAutocomplete;

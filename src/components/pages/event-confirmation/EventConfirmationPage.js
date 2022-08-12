@@ -9,6 +9,7 @@ import styles from './EventConfirmationPage.module.css';
 
 
 const EventConfirmationPage = (props) => {
+    console.log('Load EventConfirmationPage')
 
     const { eventId } = useParams();
     const [guests, setGuests] = useState([]);

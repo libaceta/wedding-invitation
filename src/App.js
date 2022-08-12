@@ -1,4 +1,4 @@
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import EventConfirmationPage from "./components/pages/event-confirmation/EventConfirmationPage";
 

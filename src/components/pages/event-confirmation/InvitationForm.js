@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useReducer, useRef, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 
 import Input from '../../UI/Input';
 import RadioButtonGroup from '../../UI/RadioButtonGroup';
@@ -13,18 +12,27 @@ import { ATTEND_RESPONSE_ENUM } from '../../utils/AttendResponseEnum';
 
 import styles from './InvitationForm.module.css';
 
-const phoneReducer = (state, action) => {
+const nameReducer = (state, action) => {
     if (action.type === 'USER_INPUT') {
-      return {value: action.val, isValid: action.val.match(/^\d{10}$/)};
+        return {value: action.val, isValid: action.val.userInput && action.val.selected};
     } else if (action.type === 'INPUT_BLUR') {
-      return {value: state.value, isValid: state.value.match(/^\d{10}$/)}
+        let isValid = action.val ? action.val.userInput && action.val.selected : state.value ? state.isValid : false;
+        return {value: state.value, isValid: isValid};
     }
     return {value: '', isValid: false}
-  }
+}
+
+const phoneReducer = (state, action) => {
+    if (action.type === 'USER_INPUT') {
+        return {value: action.val, isValid: action.val.match(/^\d{10}$/)};
+    } else if (action.type === 'INPUT_BLUR') {
+        return {value: state.value, isValid: state.value.match(/^\d{10}$/)};
+    }
+    return {value: '', isValid: false}
+}
 
 const InvitationForm = props => {
-    const navigate = useNavigate();
-    
+    console.log('Load InvitationForm');
     const [responseInvitation, setResponseInvitation] = useState();
     const [hasCompany, setHasCompany] = useState();
     const [selectedGuests, setSelectedGuests] = useState([]);
@@ -32,31 +40,43 @@ const InvitationForm = props => {
     const [confirmationModalData, setConfirmationModalData] = useState({show: false, title: '', message: ''});
     const [formIsValid, setFormIsValid] = useState(false);
 
+    const [nameState, dispatchName] = useReducer(nameReducer, {value: '', isValid: true})
     const [phoneState, dispatchPhone] = useReducer(phoneReducer, {value: '', isValid: true})
 
     const radioGroupInviteResponse = [{value: 'Y', label:'Si, contá conmigo'}, {value: 'N', label:'No puedo, lo siento'}];
     const radioGroupCompany = [{value: 'Y', label:'Si'}, {value: 'N', label:'No'}];
 
+    const { isValid: nameIsValid } = nameState;
     const { isValid: phoneIsValid } = phoneState;
 
     const phoneInputRef = useRef();
+    const nameInputRef = useRef();
 
     useEffect(() => {
         const options = props.guests.map(guest =>  { return {id: guest.id, value: guest.name, checked: guest.attend === ATTEND_RESPONSE_ENUM.YES} });
+        console.log('Load Guest options: ' + options.length);
         setGuestOptions(options);
     }, [props.guests]);
 
     useEffect(() => {
         const identifier = setTimeout(() => {
             setFormIsValid(
-                phoneIsValid && selectedGuests.length > 0
+                phoneIsValid && nameIsValid && selectedGuests.length > 0
             );
         }, 500);
     
         return () => {
             clearTimeout(identifier);
         }
-    }, [phoneIsValid, selectedGuests]);
+    }, [phoneIsValid, nameIsValid, selectedGuests]);
+
+    const nameChangeHandler = (event) => {
+        dispatchName({type: 'USER_INPUT', val: event});
+    };
+
+    const validateNameHandler = (event) => {
+        dispatchName({type: 'INPUT_BLUR', val: event});
+    };
     
     const phoneChangeHandler = (event) => {
         dispatchPhone({type: 'USER_INPUT', val: event.target.value});
@@ -68,6 +88,7 @@ const InvitationForm = props => {
 
     const onCheckHandler = (value) => {
         if (value === 'N') {
+            setHasCompany();
             setSelectedGuests(prevSelectedGuests => { return [prevSelectedGuests[0]] });
         }
         setResponseInvitation(value);
@@ -81,8 +102,8 @@ const InvitationForm = props => {
     }
 
     const onSubmitHandler = (e) => {
-        console.log('submit');
         e.preventDefault();
+        dispatchName({type: 'INPUT_BLUR'});
         dispatchPhone({type: 'INPUT_BLUR'});
         if (formIsValid) {
             const guests = selectedGuests.map((guest, index) =>  {
@@ -98,29 +119,37 @@ const InvitationForm = props => {
             }).catch((error) => {
                 setConfirmationModalData({show: true, title: 'Error al enviar su confirmación', message: 'Por favor intentelo de nuevo más tarde', icon: 'ERROR'});
             });
+            console.log('sended');
+        } else if (!nameIsValid) {
+            nameInputRef.current.focus();
         } else if (!phoneIsValid) {
             phoneInputRef.current.focus();
         }
     }
 
     const onSelectGuest = (guest, index) => {
+        if (selectedGuests.includes(guest)) {
+            return;
+        }
         console.log("select")
         setGuestOptions(prevGuestOptions => {
             prevGuestOptions.splice(prevGuestOptions.indexOf(guest), 1);
             return prevGuestOptions;
         });
-        setSelectedGuests(prevSelectedGuests => {
-            if (typeof index === 'undefined') {
-                prevSelectedGuests.unshift(guest);
-            } else {
-                prevSelectedGuests = [...prevSelectedGuests, guest];
-            }
-            return prevSelectedGuests;
-        });
-        console.log(selectedGuests);
+        let selectedGuestsNew = [...selectedGuests];
+        if (typeof index === 'undefined') {
+            selectedGuestsNew.unshift(guest);
+        } else {
+            selectedGuestsNew.push(guest);
+        }
+        console.log(selectedGuestsNew);
+        setSelectedGuests(selectedGuestsNew);
     }
 
     const onDeselectGuest = (guest) => {
+        if (!selectedGuests.includes(guest)) {
+            return;
+        }
         console.log("deselect")
         setGuestOptions(prevGuestOptions => {
             return [...prevGuestOptions, guest];
@@ -130,7 +159,6 @@ const InvitationForm = props => {
             if (index !== -1) prevSelectedGuests.splice(index, 1);
             return prevSelectedGuests;
         });
-        console.log(selectedGuests);
     }
 
     const hideConfirmationModal = () => {
@@ -142,12 +170,18 @@ const InvitationForm = props => {
             <form className={styles.form} onSubmit={onSubmitHandler}>
                 <section className={styles['form-section']}>
                     <InputAutocomplete 
+                        ref={nameInputRef}
                         label="NOMBRE Y APELLIDO"
                         suggestions={guestOptions}
                         onSelect={onSelectGuest}
                         onDeselect={onDeselectGuest}
                         notExistsError="El nombre ingresado no se encuentra en la lista de invitados"
-                        checkedError="El invitado ya confirmó su asistencia" />
+                        checkedError="El invitado ya confirmó su asistencia"
+                        onChange={nameChangeHandler}
+                        onBlur={validateNameHandler} />
+                    {/* {!nameState.showSuggestions && !nameState.selected && nameState.userInput && <span className={styles['check-error']}>{props.notExistsError}</span>} */}
+                    {nameIsValid && nameState.option && nameState.option.checked && <span className={styles['check-error']}>El invitado ya confirmó su asistencia</span>}
+                    {!nameIsValid && <span className={styles['check-error']}>Escribí tu nombre y seleccionalo de la lista</span>}
                     <Input 
                         ref={phoneInputRef}
                         label="NÚMERO DE TELÉFONO"
@@ -155,7 +189,7 @@ const InvitationForm = props => {
                         maxlength="10"
                         onChange={phoneChangeHandler}
                         onBlur={validatePhoneHandler} />
-                    {!phoneIsValid && <span className={styles['check-error']}>Escriba el número de teléfono sin 0 y sin 15</span>}
+                    {!phoneIsValid && <span className={styles['check-error']}>Escribí tu número de teléfono sin 0 y sin 15</span>}
                 </section>
                 <fieldset className={styles['fieldset-radio-group']}>
                     <legend>VENÍS AL EVENTO?</legend>
