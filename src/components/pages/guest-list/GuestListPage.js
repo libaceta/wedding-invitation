@@ -7,6 +7,7 @@ import { ATTEND_RESPONSE_ENUM } from "../../utils/AttendResponseEnum";
 
 import styles from './GuestListPage.module.css';
 import { accentFold } from "../../utils/StringUtils";
+import LoadingSpinner from "../../UI/Spinner";
 
 
 const GuestListPage = (props) => {
@@ -34,6 +35,7 @@ const GuestListPage = (props) => {
     }, [eventId]);
     return(
         <Fragment>
+            {guests.length === 0 && <LoadingSpinner animation="border" variant="primary" />}
             <div>
                 <h1 className={`${styles.title} ${styles.center}`}>Rocy Y Mati</h1>
                 <div className={styles.data}>
