@@ -22,7 +22,7 @@
 }
   
 .actions {
-    text-align: right;
+    text-align: center;
 }
 
 .actions button {
@@ -33,7 +33,6 @@
     padding: 0.5rem 2rem;
     border-radius: 25px;
     margin-top: 1rem;
-    margin-left: 1rem;
 }
   
 .actions button:hover,

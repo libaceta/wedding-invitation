@@ -211,7 +211,7 @@ const InvitationForm = props => {
                 }
                 {responseInvitation === "N" &&
                     <fieldset className={styles['fieldset-radio-group']}>
-                        <legend>TENÉS ALGÚN ACOMPAÑANTE QUE NO ASISTA?</legend>
+                        <legend>TENÉS ALGÚN ACOMPAÑANTE QUE TAMPOCO ASISTA?</legend>
                         <RadioButtonGroup onCheck={onHasCompanyHandler} options={radioGroupCompany}/>
                     </fieldset>
                 }

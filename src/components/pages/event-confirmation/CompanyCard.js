@@ -39,7 +39,7 @@ const CompanyCard = props => {
 
     return (
         <div>
-            <span>AGREGÁ A TUS INVITADOS</span>
+            <span style={{paddingLeft: '1rem'}}>AGREGÁ A TUS INVITADOS</span>
             {
                 persons.map((person, index) =>
                     <div className={styles.card} key={index}>

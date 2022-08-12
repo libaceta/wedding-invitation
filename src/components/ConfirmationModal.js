@@ -26,7 +26,7 @@ const ConfirmationModal = props => {
         <div className={classes.message}>
             {props.icon === 'SUCCESS' && <BsCheckCircle className={classes['icon-success']} />}
             {props.icon === 'ERROR' && <BsXCircle className={classes['icon-error']} />}
-            <span style={{marginLeft: '1rem'}}>{props.message}</span>
+            {props.message && <span style={{marginLeft: '1rem'}}>{props.message}</span>}
         </div>
         <div className={classes.actions}>
             <button className={classes['button--alt']} onClick={onClose}>CERRAR</button>
