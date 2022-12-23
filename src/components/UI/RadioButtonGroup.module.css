@@ -49,13 +49,13 @@ input[type=radio]:hover:after {
 }
 
 input[type=radio]:checked + .item {
-    background: #d4c4ec;
-    border: 2px solid #d4c4ec;
+    background: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
 input[type=radio]:checked + label {
-    background: #d4c4ec;
-    border: 1px solid #d4c4ec;
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 input[type=radio]:checked:after {

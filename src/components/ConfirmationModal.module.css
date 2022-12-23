@@ -7,12 +7,12 @@
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
-    color: #5d624e;
+    color: var(--text-color);
     padding: 1rem 0;
 }
 
 .icon-success {
-    color: #c491dd;
+    color: var(--secondary-color);
     font-size: 4rem;
 }
 
@@ -29,7 +29,7 @@
     font: inherit;
     cursor: pointer;
     background-color: transparent;
-    border: 1px solid #c491dd;
+    border: 1px solid var(--secondary-color);
     padding: 0.5rem 2rem;
     border-radius: 25px;
     margin-top: 1rem;
@@ -37,16 +37,16 @@
   
 .actions button:hover,
 .actions button:active {
-    background-color: #d4c4ec;
-    border-color: #d4c4ec;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
     color: white;
 }
   
 .actions .button--alt {
-    color: #c491dd;
+    color: var(--secondary-color);
 }
 
 .actions .button {
-    background-color: #c491dd;
+    background-color: var(--secondary-color);
     color: white;
 }

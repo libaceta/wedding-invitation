@@ -3,14 +3,14 @@ h1, h2 {
     font-weight: 400;
     font-weight: normal;
     font-size: 3rem;
-    color: #5d624e;
+    color: var(--text-color);
 }
 
 h3 {
     font-family: 'Alumni Sans Inline One', cursive;
     font-weight: 100;
     font-size: 2rem;
-    color: #5d624e;
+    color: var(--text-color);
 }
 
 .header {
@@ -20,5 +20,5 @@ h3 {
 
 .text {
     font-size: 1rem;
-    color: #5d624e;
+    color: var(--text-color);
 }

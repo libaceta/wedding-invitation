@@ -1,8 +1,12 @@
 body {
+  --primary-color: #f65536; /*#d4c4ec*/
+  --secondary-color: #eba28e; /*#e6e6fa*/
+  --text-color: black; /*#5d624e*/
+
   font-family: 'Nunito', sans-serif;
   font-weight: lighter;
   font-size: 0.9rem;
-  color: #5d624e;
+  color: var(--text-color);
 }
 
 .background {

@@ -20,14 +20,14 @@
 }
 
 .line {
-    color: #5d624e;
-    background-color: #5d624e;
+    color: var(--text-color);
+    background-color: var(--text-color);
     height: 5;
 }
 
 .bold {
     font-weight: bold;
-    color: #5d624e
+    color: var(--text-color);
 }
 
 .row {
@@ -41,7 +41,7 @@
 }
 
 .icon-success {
-    color: #c491dd;
+    color: var(--secondary-color);
     font-size: 1.5rem;
 }
 
