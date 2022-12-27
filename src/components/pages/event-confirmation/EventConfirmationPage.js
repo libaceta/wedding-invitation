@@ -15,19 +15,21 @@ const EventConfirmationPage = (props) => {
 
     const { eventId } = useParams();
     const [guests, setGuests] = useState([]);
+    const [loadingGuests, setLoadingGuests] = useState(true);
 
     useEffect(() => {
         console.log('getting guests by eventId: ' + eventId);
         get("/guests", [{key: 'eventId', value: eventId}]).then(
             (response) => {
                 setGuests(response);
+                setLoadingGuests(false);
             }
         );
     }, [eventId]);
 
     return (
         <div className={styles.container}>
-            {guests.length === 0 && <LoadingSpinner animation="border" variant="primary" />}
+            {loadingGuests && <LoadingSpinner animation="border" variant="primary" />}
             <EventHeader />
             <InvitationForm guests={guests} eventId={eventId}/>
         </div>
