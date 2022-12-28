@@ -182,14 +182,14 @@ const InvitationForm = props => {
                     {/* {!nameState.showSuggestions && !nameState.selected && nameState.userInput && <span className={styles['check-error']}>{props.notExistsError}</span>} */}
                     {nameIsValid && nameState.option && nameState.option.checked && <span className={styles['check-error']}>El invitado ya confirmó su asistencia</span>}
                     {!nameIsValid && <span className={styles['check-error']}>Escribí tu nombre y seleccionalo de la lista</span>}
-                    <Input 
+                    {/* <Input 
                         ref={phoneInputRef}
                         label="NÚMERO DE TELÉFONO"
                         pattern="\d*"
                         maxlength="10"
                         onChange={phoneChangeHandler}
                         onBlur={validatePhoneHandler} />
-                    {!phoneIsValid && <span className={styles['check-error']}>Escribí tu número de teléfono sin 0 y sin 15</span>}
+                    {!phoneIsValid && <span className={styles['check-error']}>Escribí tu número de teléfono sin 0 y sin 15</span>} */}
                 </section>
                 <fieldset className={styles['fieldset-radio-group']}>
                     <legend>VENÍS AL EVENTO?</legend>
